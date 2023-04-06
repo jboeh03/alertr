@@ -1,1 +1,1 @@
-web: gunicorn app:coin_app
+web:gunicorn app:coin_app
