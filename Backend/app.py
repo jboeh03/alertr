@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
 
-coin_app = Flask(__name__,
+app = Flask(__name__,
             template_folder=os.path.abspath('../frontend/templates'),
             static_folder=os.path.abspath('../frontend/static'))
 alerts = {}
