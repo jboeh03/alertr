@@ -6,9 +6,9 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
 
-app = Flask(__name__),
-template_folder=os.path.abspath('../frontend/templates'),
-static_folder=os.path.abspath('../frontend/static'))
+app = Flask(__name__,
+            template_folder=os.path.abspath('../frontend/templates'),
+            static_folder=os.path.abspath('../frontend/static'))
 alerts = {}
 
 EMAIL_ADDRESS = "yourpricealerts@gmail.com"
