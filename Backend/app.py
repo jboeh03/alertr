@@ -11,12 +11,13 @@ app = Flask(__name__,
             static_folder=os.path.abspath('../Frontend/static'))
 alerts = {}
 
-EMAIL_ADDRESS = "yourpricealerts@gmail.com"
-EMAIL_PASSWORD = "bnzyctvnlpykusaa"
+EMAIL_ADDRESS = "wealthwiseweekly@gmail.com"
+EMAIL_PASSWORD = "zqzfbstoxihuajwg"
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587  # Use 465 for SSL
 
 def send_email(email, coin, price):
+    print("send_email function called")
     msg = MIMEMultipart()
     msg['Subject'] = f'Crypto Alert: {coin}'
     msg['From'] = EMAIL_ADDRESS
@@ -53,7 +54,9 @@ def alert_job():
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(alert_job, 'interval', minutes=1)
+print("Before scheduler start")
 scheduler.start()
+print("After scheduler start")
 
 @app.route('/')
 def index():
@@ -65,12 +68,20 @@ def create_alert():
     email = data['email']
     coin = data['coin']
     interval = int(data['interval'])
+    print(f"New alert added: email={email}, coin={coin}, interval={interval}")
 
     if email not in alerts:
         alerts[email] = {}
 
-    alerts[email][coin] = {'interval': interval, 'counter': interval}
+    if coin not in alerts[email]:
+        alerts[email][coin] = {'interval': interval, 'counter': interval}
+        print(f"Alert created for {coin} every {interval} minutes")
+        print("Alerts:", alerts)
+    else:
+        print(f"Alert for {coin} already exists for this email")
+
     return jsonify({'status': 'success'})
+
 
 
 @app.route('/api/alerts', methods=['DELETE'])
